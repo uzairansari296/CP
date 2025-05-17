@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool checkPrime(int val) {
+    if(val%2 == 0) return false;
+    int cnt = 0;
+    for(int i = 1; i <= sqrt(val); i++) {
+        if(val % i == 0) {
+            cnt++;
+            if(val/i != i) cnt++;
+        }
+        if(cnt > 2) return false;
+    }
+
+    return true;
+}
+
+string func(int n, int m, vector<vector<int>>& arr) {
+
+    if(n <= 0 && m <= 0) return "Wrong Input";
+    else {
+        int cnt = 0;
+        for(int i = 0; i < n; i++) {
+            int flag = 0;
+            for(int j = 0; j < m; j++) {
+                if(arr[i][j] < 0) return "Wrong Input";
+                else {
+                    if(checkPrime(arr[i][j])) {
+                        flag = 1;
+                        break;
+                    }
+                }
+            }
+            if(flag == 0) return "Not Valid";
+        }
+        return "Valid";
+    }
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while(t--) {
+        int n,m;
+        cin >> n >> m;
+        vector<vector<int>>arr(n,vector<int>(m,-1));
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                cin >> arr[i][j];
+            }
+        }
+
+        cout << func(n, m, arr); 
+    }
+}
